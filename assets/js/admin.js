@@ -4,7 +4,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
 
     const fileInput = document.getElementById('file');
     const fileType = document.getElementById('fileType').value;
-    const name = document.getElementById('name').value;
+    const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
 
     if (!fileInput.files.length) {
@@ -15,7 +15,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     const formData = new FormData();
     formData.append('file', fileInput.files[0]);
     formData.append('fileType', fileType);
-    formData.append('name', name);
+    formData.append('title', title);
     formData.append('description', description);
 
     try {
