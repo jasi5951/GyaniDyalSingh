@@ -78,116 +78,42 @@
           <p>These are the video recordings of Gyani Dyal Singh's kirtan. Be sure to check back regularly, as we will continue to update this site with new recordings.</p>
         </div>
 
-        <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-              <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-              <video controls width="300px">
-                <source src="assets/recordings/video/Giani Dyal Singh - Khoob Khoob (Ahir Bhairo) & Oha Prem Phiri (Asa).mp4">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Khoob Khoob & Oha Prem Phiri</a></h4>
-              <p class="description">Raag Ahir Bhairo and Asa</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <video controls width="300px">
-                <source src="assets/recordings/video/Giani Dyal Singh - Raj Meh Raj Jog Meh Jogi & Sa Dharat Bhayi Hariavali (1).mp4">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Raj Meh Raj Jog Meh Jogi & Sa Dharat Bhayi Hariavali</a></h4>
-              <p class="description"></p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <video controls>
-                <source src="">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-              <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-              <video controls>
-                <source src="">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <video controls>
-                <source src="">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <video controls>
-                <source src="">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-              <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-              <video controls>
-                <source src="">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <video controls>
-                <source src="">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <video controls>
-                <source src="">
-              Your browser does not support the video tag.
-              </video>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div>
-
-        </div>
+        <script>
+          fetch('assets/recordings/video/videos.json')
+            .then(response => response.json())
+            .then(videos => {
+              const videoContainer = document.querySelector('#recordings');
+              videoContainer.innerHTML = ''; // Clear existing content
+        
+              let rowDiv = null;
+        
+              videos.forEach((video, index) => {
+                // Start a new row for every 3rd video
+                if (index % 3 === 0) {
+                  rowDiv = document.createElement('div');
+                  rowDiv.className = 'row';
+                  videoContainer.appendChild(rowDiv);
+                }
+        
+                // Add video content to the current row
+                const videoHTML = `
+                  <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up">
+                      <video controls width="300px">
+                        <source src="${video.src}" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+                      <h4 class="title"><a href="#">${video.title}</a></h4>
+                      <p class="description">${video.description}</p>
+                    </div>
+                  </div>
+                `;
+                rowDiv.innerHTML += videoHTML;
+              });
+            })
+            .catch(error => console.error('Error loading videos:', error));
+        </script>
+        
 
       </div>
     </section><!-- End Recordings Section -->

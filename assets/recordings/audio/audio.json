@@ -1,0 +1,32 @@
+[
+    {
+      "src": "assets/recordings/audio/Anand Sahib.mp3",
+      "title": "Audio Shabad 1",
+      "description": "Listen to the enchanting Raag Kirtan by Gyani Dyal Singh."
+    },
+    {
+      "src": "assets/recordings/audio/Guru Ramdas Rakho Sarnayi.mp3",
+      "title": "Audio Shabad 2",
+      "description": "A divine experience through this audio shabad."
+    },
+    {
+      "src": "assets/recordings/audio/Mere Lalan Ki Sobha.mp3",
+      "title": "Audio Shabad 3",
+      "description": "Feel the spiritual connection with this kirtan."
+    },
+    {
+      "src": "assets/recordings/audio/Meri Preet Gobind Sio Jin Ghatai.mp3",
+      "title": "Audio Shabad 4",
+      "description": "Immerse yourself in the soothing melody of this shabad."
+    },
+    {
+        "src": "assets/recordings/audio/Sajna Sant Avoh Mere.mp3",
+        "title": "Audio Shabad 4",
+        "description": "Immerse yourself in the soothing melody of this shabad."
+    },
+    {
+        "src": "assets/recordings/audio/Tikh Boojh Gyi Mil Sadh Jana.mp3",
+        "title": "Audio Shabad 4",
+        "description": "Immerse yourself in the soothing melody of this shabad."
+    }
+  ]  

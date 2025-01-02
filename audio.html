@@ -65,7 +65,7 @@
       </nav><!-- .navbar -->
 
     </div>
-  </header><!-- End Header -->
+  </header> <!-- End Header -->
 
   <main id="main">
 
@@ -78,116 +78,41 @@
           <p>These are the audio recordings of Gyani Dyal Singh's kirtan. Be sure to visit regularly, as we will keep updating this site with new recordings.</p>
         </div>
 
-        <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-              <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-              <audio controls>
-                <source src="assets/recordings/audio/Tikh Boojh Gyi Mil Sadh Jana.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Tikh Boojh Gyi Mil Sadh Jana</a></h4>
-              <p class="description">Raag Kanada</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <audio controls>
-                <source src="assets/recordings/audio/Guru Ramdas Rakho Sarnayi.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Guru Ramdas Rakho Sarnayi</a></h4>
-              <p class="description">Raag Narayani</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <audio controls>
-                <source src="assets/recordings/audio/Mere Lalan Ki Sobha.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Mere Lalan Ki Sobha</a></h4>
-              <p class="description">Raag Gorakh Kalyan</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-              <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-              <audio controls>
-                <source src="assets/recordings/audio/Sajna Sant Avoh Mere.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Sajna Sant Avoh Mere</a></h4>
-              <p class="description">Raag Durga</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <audio controls>
-                <source src="assets/recordings/audio/Sajna Sant Avoh Mere.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Sajna Sant Avoh Mere</a></h4>
-              <p class="description">Raag Pahadi</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <audio controls>
-                <source src="assets/recordings/audio/Anand Sahib.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Anand Sahib</a></h4>
-              <p class="description"></p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-              <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-              <audio controls>
-                <source src="horse.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <audio controls>
-                <source src="horse.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <audio controls>
-                <source src="horse.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div>
-
-        </div>
+        <script>
+          fetch('assets/recordings/audio/audio.json')
+            .then(response => response.json())
+            .then(audios => {
+              const audioContainer = document.querySelector('#audio-recordings');
+              audioContainer.innerHTML = ''; // Clear existing content
+        
+              let rowDiv = null;
+        
+              audios.forEach((audio, index) => {
+                // Start a new row for every 3rd audio
+                if (index % 3 === 0) {
+                  rowDiv = document.createElement('div');
+                  rowDiv.className = 'row';
+                  audioContainer.appendChild(rowDiv);
+                }
+        
+                // Add audio content to the current row
+                const audioHTML = `
+                  <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up">
+                      <audio controls>
+                        <source src="${audio.src}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                      </audio>
+                      <h4 class="title"><a href="#">${audio.title}</a></h4>
+                      <p class="description">${audio.description}</p>
+                    </div>
+                  </div>
+                `;
+                rowDiv.innerHTML += audioHTML;
+              });
+            })
+            .catch(error => console.error('Error loading audio recordings:', error));
+        </script>        
 
       </div>
     </section><!-- End Recordings Section -->
