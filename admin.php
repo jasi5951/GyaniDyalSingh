@@ -33,83 +33,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: #f8f9fa;
-      padding: 20px;
-    }
-
-    h1, h2 {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      color: #333;
-    }
-
-    #uploadForm {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
-    }
-
-    #uploadForm label {
-      font-weight: 500;
-    }
-
-    #uploadForm input, #uploadForm select, #uploadForm button {
-      margin-top: 10px;
-    }
-
-    #uploadForm button {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #uploadForm button:hover {
-      background-color: #0056b3;
-    }
-
-    #fileList ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    #fileList li {
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    video, audio {
-      max-width: 300px;
-    }
-
-    .btn-danger {
-      background-color: #dc3545;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .btn-danger:hover {
-      background-color: #c82333;
-    }
-  </style>
-
   <!-- =======================================================
   * Template Name: Squadfree
   * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
@@ -252,8 +175,8 @@
       <h1>Admin Panel</h1>
 
       <!-- Upload Form -->
-      <div id="uploadForm">
-        <h2>Upload New Recording</h2>
+      <h2>Upload New Recording</h2>
+      <div id="uploadForm" class="d-flex justify-content-center">
         <form id="uploadForm">
           <div class="form-group">
             <label for="fileType">File Type:</label>
