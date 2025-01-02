@@ -204,7 +204,10 @@
 
       <!-- Manage Existing Recordings -->
       <h2>Manage Existing Recordings</h2>
-      <div id="fileList"></div>
+      <h3>Videos</h3>
+      <div id="video-recordings"></div>
+      <h3>Audios</h3>
+      <div id="audio-recordings"></div>
     </div>
 
     <script>
@@ -249,36 +252,77 @@
 
         // Load file list
         async function loadFileList() {
-            const videoFiles = await fetchFiles('video');
-            const audioFiles = await fetchFiles('audio');
+          fetch('assets/recordings/video/videos.json')
+            .then(response => response.json())
+            .then(videos => {
+              const videoContainer = document.querySelector('#video-recordings');
+              videoContainer.innerHTML = ''; // Clear existing content
+        
+              let rowDiv = null;
+        
+              videos.forEach((video, index) => {
+                // Start a new row for every 3rd video
+                if (index % 3 === 0) {
+                  rowDiv = document.createElement('div');
+                  rowDiv.className = 'row';
+                  videoContainer.appendChild(rowDiv);
+                }
+        
+                // Add video content to the current row
+                const videoHTML = `
+                  <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up">
+                      <video controls width="300px">
+                        <source src="${video.src}" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+                      <h4 class="title"><a href="#">${video.title}</a></h4>
+                      <p class="description">${video.description}</p>
+                      <button onclick="deleteFile('${video.src}')">Delete Video</button>
+                    </div>
+                  </div>
+                `;
+                rowDiv.innerHTML += videoHTML;
+              });
+            })
+            .catch(error => console.error('Error loading videos:', error));
 
-            let fileListHTML = `<h3>Videos</h3><ul>`;
-            videoFiles.forEach(file => {
-                fileListHTML += `
-                    <li>
-                        <video controls width="300px">
-                            <source src="${file}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <button onclick="deleteFile('${file}')">Delete Video</button>
-                    </li>
+
+
+            fetch('assets/recordings/audio/audio.json')
+            .then(response => response.json())
+            .then(audios => {
+              const audioContainer = document.querySelector('#audio-recordings');
+              audioContainer.innerHTML = ''; // Clear existing content
+        
+              let rowDiv = null;
+        
+              audios.forEach((audio, index) => {
+                // Start a new row for every 3rd audio
+                if (index % 3 === 0) {
+                  rowDiv = document.createElement('div');
+                  rowDiv.className = 'row';
+                  audioContainer.appendChild(rowDiv);
+                }
+        
+                // Add audio content to the current row
+                const audioHTML = `
+                  <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up">
+                      <audio controls>
+                        <source src="${audio.src}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                      </audio>
+                      <h4 class="title"><a href="#">${audio.title}</a></h4>
+                      <p class="description">${audio.description}</p>
+                      <button onclick="deleteFile('${audio.src}')">Delete Video</button>
+                    </div>
+                  </div>
                 `;
-            });
-            fileListHTML += `</ul><h3>Audio</h3><ul>`;
-            audioFiles.forEach(file => {
-                fileListHTML += `
-                    <li>
-                        <audio controls>
-                            <source src="${file}" type="audio/mp3">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <button onclick="deleteFile('${file}')">Delete Audio</button>
-                    </li>
-                `;
-            });
-            fileListHTML += `</ul>`;
-            
-            document.getElementById('fileList').innerHTML = fileListHTML;
+                rowDiv.innerHTML += audioHTML;
+              });
+            })
+            .catch(error => console.error('Error loading audio recordings:', error));
         }
 
         // Fetch list of files for a given type (video or audio)
