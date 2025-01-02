@@ -172,7 +172,131 @@
 
   <main id="main">
     <div class="container">
-      
+    <h1>Admin - Upload and Manage Recordings</h1>
+    
+    <!-- Upload Form -->
+    <h2>Upload New Recording</h2>
+    <form id="uploadForm">
+        <label for="fileType">File Type:</label>
+        <select id="fileType" name="fileType" required>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+        </select><br><br>
+
+        <label for="file">Select File:</label>
+        <input type="file" id="file" name="file" required><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <p id="status"></p>
+
+    <h2>Manage Existing Recordings</h2>
+    <div id="fileList"></div>
+
+    <script>
+        // Upload New File
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('file');
+            const fileType = document.getElementById('fileType').value;
+
+            if (!fileInput.files.length) {
+                document.getElementById('status').innerText = "No file selected!";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('fileType', fileType);
+
+            try {
+                const response = await fetch('uploads.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                document.getElementById('status').innerText = result.message;
+
+                if (result.status === 'success') {
+                    console.log('File uploaded:', result.filePath);
+                    loadFileList();
+                }
+            } catch (error) {
+                document.getElementById('status').innerText = "Error uploading file.";
+                console.error('Upload error:', error);
+            }
+        });
+
+        // Load file list
+        async function loadFileList() {
+            const videoFiles = await fetchFiles('video');
+            const audioFiles = await fetchFiles('audio');
+
+            let fileListHTML = `<h3>Videos</h3><ul>`;
+            videoFiles.forEach(file => {
+                fileListHTML += `
+                    <li>
+                        <video controls width="300px">
+                            <source src="${file}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <button onclick="deleteFile('${file}')">Delete Video</button>
+                    </li>
+                `;
+            });
+            fileListHTML += `</ul><h3>Audio</h3><ul>`;
+            audioFiles.forEach(file => {
+                fileListHTML += `
+                    <li>
+                        <audio controls>
+                            <source src="${file}" type="audio/mp3">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <button onclick="deleteFile('${file}')">Delete Audio</button>
+                    </li>
+                `;
+            });
+            fileListHTML += `</ul>`;
+            
+            document.getElementById('fileList').innerHTML = fileListHTML;
+        }
+
+        // Fetch list of files for a given type (video or audio)
+        async function fetchFiles(fileType) {
+            const response = await fetch(`assets/recordings/${fileType}/`);
+            const files = await response.text();
+            return files.split('\n').filter(file => file.trim() !== '');
+        }
+
+        // Delete File
+        async function deleteFile(file) {
+            const confirmation = confirm('Are you sure you want to delete this file?');
+            if (!confirmation) return;
+
+            const formData = new FormData();
+            formData.append('deleteFile', file);
+
+            try {
+                const response = await fetch('uploads.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                alert(result.message);
+                loadFileList();
+            } catch (error) {
+                alert('Error deleting file');
+                console.error('Delete error:', error);
+            }
+        }
+
+        // Initial file list load
+        loadFileList();
+    </script>
     </div>
   </main>
 </body>

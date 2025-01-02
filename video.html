@@ -78,11 +78,15 @@
           <p>These are the video recordings of Gyani Dyal Singh's kirtan. Be sure to check back regularly, as we will continue to update this site with new recordings.</p>
         </div>
 
+        <div id="video-recordings">
+          
+        </div>
+
         <script>
           fetch('assets/recordings/video/videos.json')
             .then(response => response.json())
             .then(videos => {
-              const videoContainer = document.querySelector('#recordings');
+              const videoContainer = document.querySelector('#video-recordings');
               videoContainer.innerHTML = ''; // Clear existing content
         
               let rowDiv = null;
