@@ -325,13 +325,6 @@
             .catch(error => console.error('Error loading audio recordings:', error));
         }
 
-        // Fetch list of files for a given type (video or audio)
-        async function fetchFiles(fileType) {
-            const response = await fetch(`assets/recordings/${fileType}/`);
-            const files = await response.text();
-            return files.split('\n').filter(file => file.trim() !== '');
-        }
-
         // Delete File
         async function deleteFile(file) {
             const confirmation = confirm('Are you sure you want to delete this file?');
@@ -363,6 +356,5 @@
 
 
 <?php
-    Echo "works";
     }
 ?>
