@@ -33,6 +33,80 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .file-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .file-list li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-list button {
+            background-color: #f44336;
+        }
+        .file-list button:hover {
+            background-color: #d32f2f;
+        }
+        .file-list audio, .file-list video {
+            max-width: 300px;
+        }
+    </style>
+
   <!-- =======================================================
   * Template Name: Squadfree
   * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
@@ -171,28 +245,37 @@
   </header> <!-- End Header -->
 
   <main id="main">
+    <header>
+      <h1>Admin - Upload and Manage Recordings</h1>
+    </header>
+
     <div class="container">
-    <h1>Admin - Upload and Manage Recordings</h1>
-    
-    <!-- Upload Form -->
-    <h2>Upload New Recording</h2>
-    <form id="uploadForm">
-        <label for="fileType">File Type:</label>
-        <select id="fileType" name="fileType" required>
-            <option value="video">Video</option>
-            <option value="audio">Audio</option>
-        </select><br><br>
+        <!-- Upload Form -->
+        <h2>Upload New Recording</h2>
+        <form id="uploadForm">
+            <label for="fileType">File Type:</label>
+            <select id="fileType" name="fileType" required>
+                <option value="video">Video</option>
+                <option value="audio">Audio</option>
+            </select><br><br>
 
-        <label for="file">Select File:</label>
-        <input type="file" id="file" name="file" required><br><br>
+            <label for="name">Shabad Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter Shabad Name"><br><br>
 
-        <button type="submit">Upload</button>
-    </form>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required placeholder="Enter Description"></textarea><br><br>
 
-    <p id="status"></p>
+            <label for="file">Select File:</label>
+            <input type="file" id="file" name="file" required><br><br>
 
-    <h2>Manage Existing Recordings</h2>
-    <div id="fileList"></div>
+            <button type="submit">Upload</button>
+        </form>
+
+        <p id="status"></p>
+
+        <h2>Manage Existing Recordings</h2>
+        <div id="fileList" class="file-list"></div>
+    </div>
 
     <script>
         // Upload New File
@@ -201,6 +284,8 @@
 
             const fileInput = document.getElementById('file');
             const fileType = document.getElementById('fileType').value;
+            const name = document.getElementById('name').value;
+            const description = document.getElementById('description').value;
 
             if (!fileInput.files.length) {
                 document.getElementById('status').innerText = "No file selected!";
@@ -210,6 +295,8 @@
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
             formData.append('fileType', fileType);
+            formData.append('name', name);
+            formData.append('description', description);
 
             try {
                 const response = await fetch('uploads.php', {
@@ -297,7 +384,6 @@
         // Initial file list load
         loadFileList();
     </script>
-    </div>
   </main>
 </body>
 

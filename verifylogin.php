@@ -2,7 +2,7 @@
 session_start();
 
 $password = "powerade123" . $_POST['password'] . "powerade123";
-$email = $_POST['email']
+$email = $_POST['email'];
 
 $filename = "pass.txt";
 $content = file_get_contents($filename);
