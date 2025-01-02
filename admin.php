@@ -34,78 +34,81 @@
   <link href="assets/css/style.css" rel="stylesheet">
 
   <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        h1 {
-            margin: 0;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            color: #4CAF50;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .file-list ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .file-list li {
-            background-color: #f9f9f9;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .file-list button {
-            background-color: #f44336;
-        }
-        .file-list button:hover {
-            background-color: #d32f2f;
-        }
-        .file-list audio, .file-list video {
-            max-width: 300px;
-        }
-    </style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: #333;
+    }
+
+    #uploadForm {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    #uploadForm label {
+      font-weight: 500;
+    }
+
+    #uploadForm input, #uploadForm select, #uploadForm button {
+      margin-top: 10px;
+    }
+
+    #uploadForm button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #uploadForm button:hover {
+      background-color: #0056b3;
+    }
+
+    #fileList ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #fileList li {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    video, audio {
+      max-width: 300px;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+  </style>
 
   <!-- =======================================================
   * Template Name: Squadfree
@@ -245,36 +248,40 @@
   </header> <!-- End Header -->
 
   <main id="main">
-    <header>
-      <h1>Admin - Upload and Manage Recordings</h1>
-    </header>
-
     <div class="container">
-        <!-- Upload Form -->
+      <h1>Admin Panel</h1>
+
+      <!-- Upload Form -->
+      <div id="uploadForm">
         <h2>Upload New Recording</h2>
         <form id="uploadForm">
+          <div class="form-group">
             <label for="fileType">File Type:</label>
-            <select id="fileType" name="fileType" required>
-                <option value="video">Video</option>
-                <option value="audio">Audio</option>
-            </select><br><br>
-
-            <label for="name">Shabad Name:</label>
-            <input type="text" id="name" name="name" required placeholder="Enter Shabad Name"><br><br>
-
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required placeholder="Enter Description"></textarea><br><br>
-
+            <select id="fileType" name="fileType" class="form-control" required>
+              <option value="video">Video</option>
+              <option value="audio">Audio</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="file">Select File:</label>
-            <input type="file" id="file" name="file" required><br><br>
-
-            <button type="submit">Upload</button>
+            <input type="file" id="file" name="file" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="title">Shabad Title:</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Enter shabad title" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter a brief description" required></textarea>
+          </div>
+          <button type="submit">Upload</button>
         </form>
+        <p id="status" class="text-muted"></p>
+      </div>
 
-        <p id="status"></p>
-
-        <h2>Manage Existing Recordings</h2>
-        <div id="fileList" class="file-list"></div>
+      <!-- Manage Existing Recordings -->
+      <h2>Manage Existing Recordings</h2>
+      <div id="fileList"></div>
     </div>
 
     <script>
