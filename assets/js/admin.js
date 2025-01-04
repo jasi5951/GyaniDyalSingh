@@ -48,6 +48,7 @@ async function loadFileList() {
         let rowDiv = null;
         videos.forEach((video, index) => {
         // Start a new row for every 3rd video
+        console.log(videos);
         if (index % 3 === 0) {
             rowDiv = document.createElement('div');
             rowDiv.className = 'row';
@@ -56,15 +57,15 @@ async function loadFileList() {
         // Add video content to the current row
         const videoHTML = `
             <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-                <video controls width="300px">
-                <source src="${video.filePath}" type="video/mp4">
-                Your browser does not support the video tag.
-                </video>
-                <h4 class="title"><a href="#">${video.title}</a></h4>
-                <p class="description">${video.description}</p>
-                <button onclick="deleteFile('${video.filePath}')">Delete Video</button>
-            </div>
+                <div class="icon-box" data-aos="fade-up">
+                    <video controls width="300px">
+                        <source src="${video.filePath}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <h4 class="title"><a href="#">${video.title}</a></h4>
+                    <p class="description">${video.description}</p>
+                    <button onclick="deleteFile('${video.filePath}')">Delete Video</button>
+                </div>
             </div>
         `;
         rowDiv.innerHTML += videoHTML;
