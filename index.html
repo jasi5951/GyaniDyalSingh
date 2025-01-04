@@ -120,6 +120,46 @@
           <p>Here’s a sneak peek at some of our featured video recordings. If you’d like to see more, visit the recordings tab for the full collection!</p>
         </div>
 
+        <script>
+          function getRandomObjects(data, count) {
+            const shuffled = data.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+          }
+          fetch('assets/recordings/video/videos.json')
+            .then(response => response.json())
+            .then(videos => {
+              const videoContainer = document.querySelector('#video-recordings');
+              videoContainer.innerHTML = ''; // Clear existing content
+        
+              let rowDiv = null;
+              const loop = getRandomObjects(videos, 4);
+              loop.forEach((video, index) => {
+                // Start a new row for every 3rd video
+                if (index % 4 === 0) {
+                  rowDiv = document.createElement('div');
+                  rowDiv.className = 'row';
+                  videoContainer.appendChild(rowDiv);
+                }
+        
+                // Add video content to the current row
+                const videoHTML = `
+                  <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up">
+                      <video controls>
+                        <source src="${video.filePath}" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+                      <h4 class="title"><a href="#">${video.title}</a></h4>
+                      <p class="description">${video.description}</p>
+                    </div>
+                  </div>
+                `;
+                rowDiv.innerHTML += videoHTML;
+              });
+            })
+            .catch(error => console.error('Error loading videos:', error));
+        </script>
+
         <div class="row">
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
             <div class="icon-box" data-aos="fade-up">
