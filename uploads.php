@@ -1,7 +1,7 @@
 <?php
 // Define JSON file paths
-$videoJsonFile = 'assets/recordings/videos.json';
-$audioJsonFile = 'assets/recordings/audios.json';
+$videoJsonFile = 'assets/recordings/video/videos.json';
+$audioJsonFile = 'assets/recordings/audio/audios.json';
 
 // Ensure JSON files exist
 if (!file_exists($videoJsonFile)) {
@@ -63,9 +63,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 // Handle file deletion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteFile'])) {
     $deleteFile = $_POST['deleteFile']; // Path of the file to delete
+    $fileType = strpos($deleteFile, 'video') !== false ? 'video' : (strpos($deleteFile, 'audio') !== false ? 'audio' : '');
+    $jsonFile = $fileType === 'video' ? $videoJsonFile : ($fileType === 'audio' ? $audioJsonFile : '');
 
     if (file_exists($deleteFile)) {
         if (unlink($deleteFile)) {
+            // Remove the entry from the JSON file
+            if ($jsonFile) {
+                $data = json_decode(file_get_contents($jsonFile), true);
+                $updatedData = array_filter($data, function($entry) use ($deleteFile) {
+                    return $entry['filePath'] !== $deleteFile;
+                });
+                file_put_contents($jsonFile, json_encode(array_values($updatedData), JSON_PRETTY_PRINT));
+            }
             echo json_encode(['status' => 'success', 'message' => 'File deleted successfully']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to delete the file']);
