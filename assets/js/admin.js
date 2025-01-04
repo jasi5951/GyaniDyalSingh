@@ -46,7 +46,6 @@ async function loadFileList() {
         videoContainer.innerHTML = ''; // Clear existing content
 
         let rowDiv = null;
-
         videos.forEach((video, index) => {
         // Start a new row for every 3rd video
         if (index % 3 === 0) {
@@ -54,18 +53,17 @@ async function loadFileList() {
             rowDiv.className = 'row';
             videoContainer.appendChild(rowDiv);
         }
-
         // Add video content to the current row
         const videoHTML = `
             <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
             <div class="icon-box" data-aos="fade-up">
                 <video controls width="300px">
-                <source src="${video.src}" type="video/mp4">
+                <source src="${video.filePath}" type="video/mp4">
                 Your browser does not support the video tag.
                 </video>
                 <h4 class="title"><a href="#">${video.title}</a></h4>
                 <p class="description">${video.description}</p>
-                <button onclick="deleteFile('${video.src}')">Delete Video</button>
+                <button onclick="deleteFile('${video.filePath}')">Delete Video</button>
             </div>
             </div>
         `;
@@ -76,7 +74,7 @@ async function loadFileList() {
 
 
 
-    fetch('assets/recordings/audio/audio.json')
+    fetch('assets/recordings/audio/audios.json')
     .then(response => response.json())
     .then(audios => {
         const audioContainer = document.querySelector('#audio-recordings');
@@ -97,12 +95,12 @@ async function loadFileList() {
             <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
             <div class="icon-box" data-aos="fade-up">
                 <audio controls>
-                <source src="${audio.src}" type="audio/mpeg">
+                <source src="${audio.filePath}" type="audio/mpeg">
                 Your browser does not support the audio element.
                 </audio>
                 <h4 class="title"><a href="#">${audio.title}</a></h4>
                 <p class="description">${audio.description}</p>
-                <button onclick="deleteFile('${audio.src}')">Delete Video</button>
+                <button onclick="deleteFile('${audio.filePath}')">Delete Video</button>
             </div>
             </div>
         `;
