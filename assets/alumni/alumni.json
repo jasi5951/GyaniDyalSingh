@@ -1,0 +1,13 @@
+[
+    {
+      "picture": "assets/images/alumni/john_doe.jpg",
+      "name": "John Doe",
+      "description": "Graduated in 2020, currently working as a Software Engineer at XYZ Corp."
+    },
+    {
+      "picture": "assets/images/alumni/jane_smith.jpg",
+      "name": "Jane Smith",
+      "description": "Graduated in 2021, pursuing a PhD in Computer Science."
+    }
+  ]
+  

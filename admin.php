@@ -63,6 +63,7 @@
               <li><a href="audio.html">Audio</a></li>
             </ul>
           </li>
+          <li><a class="nav-link" href="alumni.html">Alumni</a></li>
           <li><a class="nav-link" href="learn.html">Learn/Resources</a></li>
           <li><a class="nav-link" href="contact.html">Contact</a></li>
           <li><a class="nav-link" href="https://www.clover.com/pay-widgets/3258774c-c95c-49b7-bcc0-4cd00571580a">Support</a></li>
@@ -240,6 +241,107 @@
       <h3>Audios</h3>
       <div id="audio-recordings"></div>
     </div>
+
+
+    <div class="container mt-5">
+    <h2 class="text-center">Manage Alumni</h2>
+
+    <!-- Add Alumni Form -->
+    <h3>Add New Alumnus</h3>
+    <form id="addAlumnusForm" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="alumnusName" class="form-label">Name</label>
+        <input type="text" id="alumnusName" name="name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="alumnusDescription" class="form-label">Description</label>
+        <textarea id="alumnusDescription" name="description" class="form-control" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="alumnusPicture" class="form-label">Picture</label>
+        <input type="file" id="alumnusPicture" name="picture" class="form-control" accept="image/*" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Alumnus</button>
+    </form>
+
+    <hr>
+
+    <!-- Delete Alumni Entries -->
+    <h3>Delete Alumni</h3>
+    <div id="alumniDeleteList" class="list-group">
+      <!-- Alumni entries to delete will be populated here -->
+    </div>
+  </div>
+
+  <script>
+    const alumniJsonPath = 'alumni.json';
+
+    // Add Alumnus Form Submission
+    document.getElementById('addAlumnusForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch('alumni_upload.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert('Alumnus added successfully!');
+          loadAlumniDeleteList();
+          this.reset();
+        } else {
+          alert(data.message || 'Error adding alumnus.');
+        }
+      });
+    });
+
+    // Load Alumni Delete List
+    function loadAlumniDeleteList() {
+      fetch(alumniJsonPath)
+        .then(response => response.json())
+        .then(data => {
+          const list = document.getElementById('alumniDeleteList');
+          list.innerHTML = '';
+          data.forEach(alumnus => {
+            const item = document.createElement('div');
+            item.className = 'list-group-item d-flex justify-content-between align-items-center';
+            item.innerHTML = `
+              <span>
+                <img src="${alumnus.picture}" alt="${alumnus.name}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                ${alumnus.name} - ${alumnus.description}
+              </span>
+              <button class="btn btn-danger btn-sm" onclick="deleteAlumnus('${alumnus.picture}')">Delete</button>
+            `;
+            list.appendChild(item);
+          });
+        });
+    }
+
+    // Delete Alumnus Function
+    function deleteAlumnus(picturePath) {
+      if (confirm('Are you sure you want to delete this alumnus?')) {
+        const formData = new FormData();
+        formData.append('deleteAlumnus', picturePath);
+        fetch('alumni_upload.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Alumnus deleted successfully!');
+            loadAlumniDeleteList();
+          } else {
+            alert(data.message || 'Error deleting alumnus.');
+          }
+        });
+      }
+    }
+
+    // Initial Load
+    loadAlumniDeleteList();
+  </script>
   </main>
 
   <!-- ======= Footer ======= -->
