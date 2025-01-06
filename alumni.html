@@ -69,12 +69,18 @@
   </header><!-- End Header -->
 
   <main id="main">
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Our Alumni</h1>
-        <div id="alumni-list" class="row">
-            <!-- Alumni cards will be populated dynamically -->
-        </div>
-    </div>
+    <section id="alumni" class="alumni">
+        <div class="container">
+  
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Alumni</h2>
+                <p>Meet the students who have had the privilege of learning from Gyani Dyal Singh. Each of these dedicated individuals has studied under his guidance, gaining knowledge, inspiration, and a deeper connection to Gurmat Sangeet.</p>
+            </div>
+            <div id="alumni-list" class="row">
+                <!-- Alumni cards will be populated dynamically -->
+            </div>
+            </div>
+    </section>
     <script>
     fetch('assets/alumni/alumni.json')
         .then(response => response.json())

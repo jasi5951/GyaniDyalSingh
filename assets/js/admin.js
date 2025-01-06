@@ -136,3 +136,72 @@ async function deleteFile(file) {
 
 // Initial file list load
 loadFileList();
+
+
+const alumniJsonPath = 'assets/alumni/alumni.json';
+
+    // Add Alumnus Form Submission
+    document.getElementById('addAlumnusForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch('alumni_upload.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert('Alumnus added successfully!');
+          loadAlumniDeleteList();
+          this.reset();
+        } else {
+          alert(data.message || 'Error adding alumnus.');
+        }
+      });
+    });
+
+    // Load Alumni Delete List
+    function loadAlumniDeleteList() {
+      fetch(alumniJsonPath)
+        .then(response => response.json())
+        .then(data => {
+          const list = document.getElementById('alumniDeleteList');
+          list.innerHTML = '';
+          data.forEach(alumnus => {
+            const item = document.createElement('div');
+            item.className = 'list-group-item d-flex justify-content-between align-items-center';
+            item.innerHTML = `
+              <span>
+                <img src="${alumnus.picture}" alt="${alumnus.name}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                ${alumnus.name} - ${alumnus.description}
+              </span>
+              <button class="btn btn-danger btn-sm" onclick="deleteAlumnus('${alumnus.picture}')">Delete</button>
+            `;
+            list.appendChild(item);
+          });
+        });
+    }
+
+    // Delete Alumnus Function
+    function deleteAlumnus(picturePath) {
+      if (confirm('Are you sure you want to delete this alumnus?')) {
+        const formData = new FormData();
+        formData.append('deleteAlumnus', picturePath);
+        fetch('alumni_upload.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Alumnus deleted successfully!');
+            loadAlumniDeleteList();
+          } else {
+            alert(data.message || 'Error deleting alumnus.');
+          }
+        });
+      }
+    }
+
+    // Initial Load
+    loadAlumniDeleteList();
