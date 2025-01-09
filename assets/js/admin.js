@@ -10,6 +10,8 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     if (!fileInput.files.length) {
         document.getElementById('status').innerText = "No file selected!";
         return;
+    } else {
+        document.getElementById('status').innerText = "Uploading Please Wait!";
     }
 
     const formData = new FormData();

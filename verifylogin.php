@@ -17,19 +17,19 @@ if ($email == $real_email) {
     if (password_verify($password, $hashed_password)) {
 
         $_SESSION["admin"] = "true";
-        header('Location: https://34.216.220.94/admin.php');
+        header('Location: https://principaldayalsingh.com/admin.php');
         exit();
     
     } else {
     
-        header('Location: https://34.216.220.94/admin.php?login=false');
+        header('Location: https://principaldayalsingh.com/admin.php?login=false');
         exit();
     
     }
 
 } else {
 
-    header('Location: https://34.216.220.94/admin.php?login=false');
+    header('Location: https://principaldayalsingh.com/admin.php?login=false');
     exit();
 
 }
